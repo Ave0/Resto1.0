@@ -10,18 +10,17 @@ class Restaurante(models.Model):
     horario=models.CharField(max_length=100)
     calificacion=models.IntegerField(default=10)
     def __unicode__(self):
-        return self.nombre 
+        return self.nombre
 
 class FormularioRestauranteForm(ModelForm):
     class Meta:
         model=Restaurante
         exclude=['calificacion']
-    
+
 class Platillo(models.Model):
     restaurante=models.ForeignKey(Restaurante)
     nombre_platillo=models.CharField(max_length=100)
     descripcion_platillo=models.CharField(max_length=100)
     precio=models.FloatField()
-    porcion=models.CharField(max_length=100)
     def __unicode__(self):
-        return self.nombre_platillo 
+        return self.nombre_platillo
