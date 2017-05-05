@@ -1,0 +1,310 @@
+{% extends 'BackUsuarios/Base.html' %}
+{% load staticfiles %}
+
+	{% block css_adicional %}
+	<!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'Back/plugins/datatables/jquery.dataTables.min.css' %}">
+	{% endblock %}
+
+
+
+
+{% block contenido_principal%}
+<section class="invoice">
+ 
+<div class="tab-pane" id="settings">
+
+			<div class="row">
+              <div class="col-md-12">
+                    <form action="/BackEnd/FormularioCotizacionProductos" method="post" role="form" enctype="multipart/form-data" class="form-horizontal">
+                     {% csrf_token %}   
+                      <input type="hidden" name="numeroPartidas" id="numeroPartidas" value="2">           
+                      <div class="form-group" id="divisionDatos" >
+                      <br>
+                        <label for="inputName" class="col-sm-2 control-label">Cliente</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" id="Cliente" name="Cliente">
+                          {% for cliente in Clientes %}
+                          <option>{{cliente.nombre}}</option>
+                          {% endfor %}
+		                  </select>
+                        </div>
+                      </div>
+					<div class="form-group">
+					<label for="inputName" class="col-sm-2 control-label">Encabezado </label>
+					<div class="col-sm-10">
+                      <textarea name="encabezado" id="encabezado" rows="5" cols="20">
+	                		Aprovecho la oportunidad para enviarle un cordial saludo asi como hacer de su conocimiento la cotizacion de los servicios los cuales nos solicito:
+	            		</textarea>
+                      </div>      
+					</div>
+					<div id="wrapper">
+						<div class="form-group">
+							<label for="Concepto" class="col-sm-2 control-label">Partida</label>
+
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="Partida1" name="Partida1" 
+									placeholder="Concepto">
+							</div>
+
+							<div class="col-sm-1">
+								<input type="text" class="form-control" id="Cantidad1" name="Cantidad1"
+									placeholder="Cantidad" onblur="calcular_totales();">
+							</div>
+
+							<div class="col-sm-1">
+								<input type="text" class="form-control" id="PU1" name="PU1"
+									placeholder="Precio Unitario" onblur="calcular_totales();">
+							</div>
+							
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="PT1" name="PT1"
+									placeholder="Precio Total" disabled>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label for="Concepto" class="col-sm-2 control-label">Partida</label>
+
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="Partida2" name="Partida2"
+									placeholder="Concepto">
+							</div>
+
+							<div class="col-sm-1">
+								<input type="text" class="form-control" id="Cantidad2" name="Cantidad2"
+									placeholder="Cantidad" onblur="calcular_totales();">
+							</div>
+
+							<div class="col-sm-1">
+								<input type="text" class="form-control" id="PU2" name="PU2"
+									placeholder="Precio Unitario" onblur="calcular_totales();">
+							</div>
+							
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="PT2" name="PT2"
+									placeholder="Precio Total" disabled>
+							</div>
+
+						</div>
+					</div>
+					<div class="box-footer">
+						<label for="Concepto" class="col-sm-2 control-label">Agregar
+							Otra Partida</label>
+						<button id="more_fields" onclick="add_fields();"
+							value="AgregarOtraPartida" class="btn btn-primary" type="button">Agregar</button>
+					</div>
+
+
+
+					<div class="form-group">
+					<label for="inputName" class="col-sm-2 control-label">Pie de Pagina </label>
+					<div class="col-sm-10">
+                      <textarea name="pieDePagina" id="pieDePagina" rows="5" cols="20">
+						Agradezco la atencion prestada y quedo pendiente para cualquier duda o aclaración.
+						50% Anticipo, 50% ContraEntrega.
+		            		</textarea>
+                      </div>      
+					</div>
+
+					<div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button type="submit" class="btn btn-danger">Generar</button>
+                        </div>
+                      </div>
+                    </form>
+                    
+                    </div>
+                    
+                  </div>
+			
+			<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Listado de contizaciones</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="TablaCotizaciones" name="TablaCotizaciones" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Folio</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>URL</th>
+                        <th>Activo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {%for cotizacion in cotizacionesP%}
+                      <tr>
+                     <th>{{cotizacion.folio}}</th>
+                     <th>{{cotizacion.cliente}}</th>
+                     <th>{{cotizacion.fecha_creacion}}</th>
+                     <th>{{cotizacion.liga}}</th>
+                     <th>{{cotizacion.estatus}}</th>
+
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Folio</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>URL</th>
+                        <th>Activo</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+			
+
+              
+                  </div>
+                  </section>
+{% endblock %}
+
+{% block js_adicional %}
+    <script src="{% static 'Back/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'Back/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+	<script>
+	var ElememtosIniciales=3;
+      $(function () {
+    	  var table=$('#TablaUsuarios').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "pageLength": 5,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "columnDefs": [
+                         {
+                             "targets": [ 2 ],
+                             "visible": false,
+                             "searchable": false
+                         }],
+          "language": {
+        	    "emptyTable":     "Sin datos disponibles",
+        	    "info":           "Mostrando _END_ datos  de un total de _TOTAL_",
+        	    "infoEmpty":      "No hay entradas",
+        	    "infoFiltered":   "(filtrado de un total de _MAX_ )",
+        	    "infoPostFix":    "",
+        	    "thousands":      ",",
+        	    "lengthMenu":     "Show _MENU_ entries",
+        	    "loadingRecords": "Cargando...",
+        	    "processing":     "Procesando...",
+        	    "search":         "Buscar:",
+        	    "zeroRecords":    "No hay coincidencias",
+        	    "paginate": {
+        	        "first":      "Primero",
+        	        "last":       "Ultimo",
+        	        "next":       "Siguiente",
+        	        "previous":   "Anterior	"
+        	    },
+        	    "aria": {
+        	        "sortAscending":  ": Ordenado Ascendente",
+        	        "sortDescending": ": Ordenado Descendente"
+        	    }
+
+                         }
+          
+          
+        });
+        
+        $('#TablaUsuarios tbody').on( 'click', 'tr', function () {
+       
+			var valores= table.row( this ).data();
+      	    if ( $(this).hasClass('selected') ) {
+                  $(this).removeClass('selected');
+              }
+              else {
+                  table.$('tr.selected').removeClass('selected');
+                  $(this).addClass('selected');
+              }
+      	$('#nombreCompleto').val(valores[0]);
+  	    $('#correoElectronico').val(valores[1]);
+  	    $("#imagenUsuario").attr("src",valores[2]);
+  	    if (valores[4]=='False'){
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', false);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', true);  
+  	    }
+  	    else{
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', true);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', false);  
+  	    	
+  	    }
+  	  	 
+  	    
+  	  var offset = 20; //Offset of 20px
+
+      $('html, body').animate({
+          scrollTop: $("#divisionDatos").offset().top + offset
+      }, 200);
+  	    
+  	  	
+      	} );
+        
+        
+                 
+
+        
+        
+      });
+      $(function () {
+
+    	    CKEDITOR.replace('encabezado');
+    	    CKEDITOR.replace('pieDePagina');
+    	   
+    	  });
+     
+      function add_fields() {
+    	  	var wrapper = document.getElementById("wrapper");
+    	  	wrapper.insertAdjacentHTML("beforeend",'<div class="form-group"><label for="Concepto" class="col-sm-2 control-label">Partida</label> \
+    				<div class="col-sm-6"> \
+    				<input type="text" class="form-control" id="Partida'+ElememtosIniciales+'"  \
+    				name="Partida'+ElememtosIniciales+'"  placeholder="Concepto"> \
+    				</div> \
+    				<div class="col-sm-1"> \
+    					<input type="text" class="form-control" id="Cantidad'+ElememtosIniciales+'" name="Cantidad'+ElememtosIniciales+'" \
+    					placeholder="Cantidad" onblur="calcular_totales()";>  \
+    				</div> \
+    				<div class="col-sm-1"> \
+    					<input type="text" class="form-control" id="PU'+ElememtosIniciales+'"  name="PU'+ElememtosIniciales+'"\
+    					placeholder="Precio Unitario" onblur="calcular_totales()";>  \
+    				</div> \
+    				<div class="col-sm-2"> \
+					<input type="text" class="form-control" id="PT'+ElememtosIniciales+'"  name="PT'+ElememtosIniciales+'"\
+					placeholder="Precio Total" disabled>  \
+				</div> \
+				</div>'
+    	  			
+    	  	);
+    	    
+			document.getElementById('numeroPartidas').value =ElememtosIniciales ;
+    	    ElememtosIniciales=ElememtosIniciales+1;
+    	}
+      
+      function calcular_totales(){
+    	  for (i = 1; i < ElememtosIniciales+1; i++) {
+    		  var cantidadS="Cantidad"+i.toString();
+    		  var precioUnitarioS="PU"+i.toString();
+    		  var precioTotalS="PT"+i.toString();
+    		  var cantidad = document.getElementById(cantidadS).value;
+    		  var precioUnitario = parseFloat(document.getElementById(precioUnitarioS).value);
+    		  if (!isNaN(cantidad) && !isNaN(precioUnitario)  ){
+    			  var total=precioUnitario*cantidad;
+        		  document.getElementById(precioTotalS).value = total;
+    		  }
+    		  
+    		}
+      };
+    </script>
+    
+{% endblock %}
+
+
+ 

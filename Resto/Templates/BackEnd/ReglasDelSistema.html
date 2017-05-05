@@ -1,0 +1,244 @@
+{% extends 'Templates/Base.html' %}
+{% load staticfiles %}
+
+	{% block css_adicional %}
+	<!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'Back/plugins/datatables/jquery.dataTables.min.css' %}">
+	{% endblock %}
+
+
+
+ {% block menu_lateral %}
+<li class="treeview">
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="UsuariosActivos.html"><i class="fa fa-circle-o"></i> Usuarios Activos</a></li>
+            <li class=""><a href="UsuariosPendientes"><i class="fa fa-circle-o"></i> Pendientes de Aprobación</a></li>
+          </ul>
+        </li>
+{% endblock %}
+
+
+{% block contenido_principal%}
+<section class="invoice">
+<div class="tab-pane" id="settings">
+			
+			<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Listado de Usuarios</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="TablaUsuarios" name="TablaUsuarios" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Nombre Completo</th>
+                        <th>Correo</th>
+                        <th>Fotografia</th>
+                        <th>Administrador</th>
+                        <th>Activo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {%for usuario in usuarios%}
+                      <tr>
+                     <th>{{usuario.userprofile.nombre_completo}}</th>
+                     <th>{{usuario.email}}</th>
+                     <th>{{usuario.userprofile.foto.url}}</th>
+                     <th>{{usuario.userprofile.usuario_admin}}</th>
+                     <th>{{usuario.is_active}}</th>
+
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Nombre Completo</th>
+                        <th>Correo</th>
+                        <th>Fotografia</th>
+                        <th>Administrador</th>
+                        <th>Activo</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+			
+
+              <div class="row">
+              <div class="col-md-6">
+                    <form class="form-horizontal">
+                      
+                      <div class="form-group" id="divisionDatos" >
+                      <br>
+                        <label for="inputName" class="col-sm-2 control-label">Nombre </label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre Completo">
+                        </div>
+                      </div>                    
+                      
+                      <div class="form-group">
+                        <label for="inputEmail" class="col-sm-2 control-label">Correo</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="correoElectronico" name="correoElectronico" placeholder="Correo Electronico">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">Contraseña</label>
+                        <div class="col-sm-10">
+                          <input type="password" class="form-control" id="contrasena1" name="contrasena1" placeholder="Contraseña">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">Contraseña</label>
+                        <div class="col-sm-10">
+                          <input type="password" class="form-control" id="contrasena2" name="contrasena2" placeholder=" Repetir Contraseña">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+		                 <label for="exampleInputFile" class="col-sm-2 control-label">Fotografia</label>
+		                  
+		                 <div class="col-sm-10"> 
+		                 <input type="file" id="fotografia" name="fotografia">
+						</div>
+		                  
+		                </div>
+                      
+                    
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">Estado </label>
+                        <div class="col-sm-10">
+                          <label>
+                          <input type="radio" name="radioEstatus" id="radioEstatus" value="Activo" checked >
+                          Activo
+                        </label>
+                        
+                        <label>
+                          <input type="radio" name="radioEstatus" id="radioEstatus" value="Inactivo" >
+                          Dado de Baja
+                        </label>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <div class="checkbox">
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button type="submit" class="btn btn-danger">Modificar</button>
+                        </div>
+                      </div>
+                    </form>
+                    
+                    </div>
+                    <div class="col-md-6">
+	                    <img id="imagenUsuario" name="imagenUsuario" src="{{imagen_usuario}}" class="img-responsive" alt="User Image">
+                    </div>
+                    
+                  </div>
+                  </div>
+                  </section>
+{% endblock %}
+
+{% block js_adicional %}
+    <script src="{% static 'Back/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'Back/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+	<script>
+      $(function () {
+    	  var table=$('#TablaUsuarios').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "pageLength": 5,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "columnDefs": [
+                         {
+                             "targets": [ 2 ],
+                             "visible": false,
+                             "searchable": false
+                         }],
+          "language": {
+        	    "emptyTable":     "Sin datos disponibles",
+        	    "info":           "Mostrando _END_ datos  de un total de _TOTAL_",
+        	    "infoEmpty":      "No hay entradas",
+        	    "infoFiltered":   "(filtrado de un total de _MAX_ )",
+        	    "infoPostFix":    "",
+        	    "thousands":      ",",
+        	    "lengthMenu":     "Show _MENU_ entries",
+        	    "loadingRecords": "Cargando...",
+        	    "processing":     "Procesando...",
+        	    "search":         "Buscar:",
+        	    "zeroRecords":    "No hay coincidencias",
+        	    "paginate": {
+        	        "first":      "Primero",
+        	        "last":       "Ultimo",
+        	        "next":       "Siguiente",
+        	        "previous":   "Anterior	"
+        	    },
+        	    "aria": {
+        	        "sortAscending":  ": Ordenado Ascendente",
+        	        "sortDescending": ": Ordenado Descendente"
+        	    }
+
+                         }
+          
+          
+        });
+        
+        $('#TablaUsuarios tbody').on( 'click', 'tr', function () {
+       
+			var valores= table.row( this ).data();
+      	    if ( $(this).hasClass('selected') ) {
+                  $(this).removeClass('selected');
+              }
+              else {
+                  table.$('tr.selected').removeClass('selected');
+                  $(this).addClass('selected');
+              }
+      	$('#nombreCompleto').val(valores[0]);
+  	    $('#correoElectronico').val(valores[1]);
+  	    $("#imagenUsuario").attr("src",valores[2]);
+  	    if (valores[4]=='False'){
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', false);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', true);  
+  	    }
+  	    else{
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', true);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', false);  
+  	    	
+  	    }
+  	  	 
+  	    
+  	  var offset = 20; //Offset of 20px
+
+      $('html, body').animate({
+          scrollTop: $("#divisionDatos").offset().top + offset
+      }, 200);
+  	    
+  	  	
+      	} );
+        
+        
+                 
+
+        
+        
+      });
+      
+      	
+    </script>
+    
+{% endblock %}
+
+
+ 
