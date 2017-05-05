@@ -1,4 +1,3 @@
-.metadata
 *.pyc
-/media
-
+.gitignore
+/Resto/BackEnd/migrations
