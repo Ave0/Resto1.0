@@ -1,0 +1,146 @@
+{% extends 'BackUsuarios/Base.html' %}
+{% load staticfiles %}
+
+	{% block css_adicional %}
+	<!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'Back/plugins/datatables/jquery.dataTables.min.css' %}">
+	{% endblock %}
+
+
+
+ {% block menu_lateral %}
+<li class="treeview">
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="UsuariosActivos.html"><i class="fa fa-circle-o"></i> Usuarios Activos</a></li>
+            <li class=""><a href="UsuariosPendientes"><i class="fa fa-circle-o"></i> Pendientes de Aprobación</a></li>
+          </ul>
+        </li>
+{% endblock %}
+
+
+{% block contenido_principal%}
+<section class="content">
+          <div class="error-page">
+            <h2 class="headline text-yellow"> 404</h2>
+            <div class="error-content">
+              <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+              <p>
+                We could not find the page you were looking for.
+                Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+              </p>
+              <form class="search-form">
+                <div class="input-group">
+                  <input type="text" name="search" class="form-control" placeholder="Search">
+                  <div class="input-group-btn">
+                    <button type="submit" name="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i></button>
+                  </div>
+                </div><!-- /.input-group -->
+              </form>
+            </div><!-- /.error-content -->
+          </div><!-- /.error-page -->
+        </section>
+
+
+
+
+{% endblock %}
+
+{% block js_adicional %}
+    <script src="{% static 'Back/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'Back/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+	<script>
+      $(function () {
+    	  var table=$('#TablaUsuarios').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "pageLength": 5,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "columnDefs": [
+                         {
+                             "targets": [ 2 ],
+                             "visible": false,
+                             "searchable": false
+                         }],
+          "language": {
+        	    "emptyTable":     "Sin datos disponibles",
+        	    "info":           "Mostrando _END_ datos  de un total de _TOTAL_",
+        	    "infoEmpty":      "No hay entradas",
+        	    "infoFiltered":   "(filtrado de un total de _MAX_ )",
+        	    "infoPostFix":    "",
+        	    "thousands":      ",",
+        	    "lengthMenu":     "Show _MENU_ entries",
+        	    "loadingRecords": "Cargando...",
+        	    "processing":     "Procesando...",
+        	    "search":         "Buscar:",
+        	    "zeroRecords":    "No hay coincidencias",
+        	    "paginate": {
+        	        "first":      "Primero",
+        	        "last":       "Ultimo",
+        	        "next":       "Siguiente",
+        	        "previous":   "Anterior	"
+        	    },
+        	    "aria": {
+        	        "sortAscending":  ": Ordenado Ascendente",
+        	        "sortDescending": ": Ordenado Descendente"
+        	    }
+
+                         }
+          
+          
+        });
+        
+        $('#TablaUsuarios tbody').on( 'click', 'tr', function () {
+       
+			var valores= table.row( this ).data();
+      	    if ( $(this).hasClass('selected') ) {
+                  $(this).removeClass('selected');
+              }
+              else {
+                  table.$('tr.selected').removeClass('selected');
+                  $(this).addClass('selected');
+              }
+      	$('#nombreCompleto').val(valores[0]);
+  	    $('#correoElectronico').val(valores[1]);
+  	    $("#imagenUsuario").attr("src",valores[2]);
+  	    if (valores[4]=='False'){
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', false);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', true);  
+  	    }
+  	    else{
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', true);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', false);  
+  	    	
+  	    }
+  	  	 
+  	    
+  	  var offset = 20; //Offset of 20px
+
+      $('html, body').animate({
+          scrollTop: $("#divisionDatos").offset().top + offset
+      }, 200);
+  	    
+  	  	
+      	} );
+        
+        
+                 
+
+        
+        
+      });
+      
+      	
+    </script>
+    
+{% endblock %}
+
+
+ 

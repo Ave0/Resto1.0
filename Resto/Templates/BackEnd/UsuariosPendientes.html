@@ -1,0 +1,197 @@
+{% extends 'BackUsuarios/Base.html' %}
+{% load staticfiles %}
+
+	{% block css_adicional %}
+	<!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'Back/plugins/datatables/jquery.dataTables.min.css' %}">
+	{% endblock %}
+
+
+{% block contenido_principal%}
+<section class="invoice">
+<div class="tab-pane" id="settings">
+			
+			<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Listado de Usuarios</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="TablaUsuarios" name="TablaUsuarios" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Nombre Completo</th>
+                        <th>Correo</th>
+                        <th>Fotografia</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {%for usuario in usuarios%}
+                      <tr>
+                     <th>{{usuario.nombre_completo}}</th>
+                     <th>{{usuario.correo_electronico}}</th>
+                     <th>{{usuario.foto.url}}</th>
+
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Nombre Completo</th>
+                        <th>Correo</th>
+                        <th>Fotografia</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+			
+
+              <div class="row">
+              <div class="col-md-6">
+                    <form class="form-horizontal" action="/BackEnd/Funciones-de-Usuarios/" enctype="multipart/form-data" method="post">
+                    	{% csrf_token %}
+                      <input type="hidden" name="funcion" value="aprobar_usuario">
+                      
+                      <div class="form-group" id="divisionDatos" >
+                      <br>
+                        <label for="inputName" class="col-sm-2 control-label">Nombre </label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre Completo">
+                        </div>
+                      </div>                    
+                      
+                      <div class="form-group">
+                        <label for="inputEmail" class="col-sm-2 control-label">Correo</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="correoElectronico" name="correoElectronico" placeholder="Correo Electronico">
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="form-group">
+		                 <label for="exampleInputFile" class="col-sm-2 control-label">Fotografia</label>
+		                  
+		                 <div class="col-sm-10"> 
+		                 <input type="file" id="fotografia" name="fotografia">
+						</div>
+		                  
+		                </div>
+                                           
+                      
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button id="botonAprobar" type="submit" class="btn btn-danger" disabled>Aprobar</button>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+	                   {{permisos}}
+                    	</div>
+                    </form>
+                    
+                    </div>
+                    
+                    <div class="col-md-3">
+	                    <img id="imagenUsuario" name="imagenUsuario" src="{{imagen_usuario}}" class="img-responsive" alt="User Image">
+                    </div>
+                    
+                  </div>
+                  </div>
+                  </section>
+{% endblock %}
+
+{% block js_adicional %}
+    <script src="{% static 'Back/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'Back/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+	<script>
+      $(function () {
+    	  var table=$('#TablaUsuarios').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "pageLength": 5,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "columnDefs": [
+                         {
+                             "targets": [ 2 ],
+                             "visible": false,
+                             "searchable": false
+                         }],
+          "language": {
+        	    "emptyTable":     "Sin datos disponibles",
+        	    "info":           "Mostrando _END_ datos  de un total de _TOTAL_",
+        	    "infoEmpty":      "No hay entradas",
+        	    "infoFiltered":   "(filtrado de un total de _MAX_ )",
+        	    "infoPostFix":    "",
+        	    "thousands":      ",",
+        	    "lengthMenu":     "Show _MENU_ entries",
+        	    "loadingRecords": "Cargando...",
+        	    "processing":     "Procesando...",
+        	    "search":         "Buscar:",
+        	    "zeroRecords":    "No hay coincidencias",
+        	    "paginate": {
+        	        "first":      "Primero",
+        	        "last":       "Ultimo",
+        	        "next":       "Siguiente",
+        	        "previous":   "Anterior	"
+        	    },
+        	    "aria": {
+        	        "sortAscending":  ": Ordenado Ascendente",
+        	        "sortDescending": ": Ordenado Descendente"
+        	    }
+
+                         }
+          
+          
+        });
+        
+        $('#TablaUsuarios tbody').on( 'click', 'tr', function () {
+            $('#botonAprobar').prop('disabled', false);
+			var valores= table.row( this ).data();
+      	    if ( $(this).hasClass('selected') ) {
+                  $(this).removeClass('selected');
+              }
+              else {
+                  table.$('tr.selected').removeClass('selected');
+                  $(this).addClass('selected');
+              }
+      	$('#nombreCompleto').val(valores[0]);
+  	    $('#correoElectronico').val(valores[1]);
+  	    $("#imagenUsuario").attr("src",valores[2]);
+  	    if (valores[4]=='False'){
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', false);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', true);  
+  	    }
+  	    else{
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', true);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', false);  
+  	    	
+  	    }
+  	  	 
+  	    
+  	  var offset = 20; //Offset of 20px
+
+      $('html, body').animate({
+          scrollTop: $("#divisionDatos").offset().top + offset
+      }, 200);
+  	    
+  	  	
+      	} );
+        
+        
+                 
+
+        
+        
+      });
+      
+      	
+    </script>
+    
+{% endblock %}
+
+
+ 

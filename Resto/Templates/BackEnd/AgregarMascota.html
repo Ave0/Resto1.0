@@ -1,0 +1,150 @@
+{% extends 'BackEnd/Base.html' %}
+{% load staticfiles %}
+
+{% block css_adicional %}
+    <style> 
+       .centerBox-header {
+           text-align: center;
+       }
+    
+    </style>
+{% endblock %}
+
+{% block contenido_principal %}
+    <section class="invoice">
+        <div class="box box-primary">
+            <h1 class="box-header with-border centerBox-header">Agregar Mascota</h1>
+                
+            <div class="row">
+                    
+                <div class="box-body">
+                <div class="col-sm-6">
+                    <form class="form-horizontal">
+                            
+                        <div class="form-group">
+                            <label for="nombreMascota" class="col-sm-2 control-label">Nombre:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" placeholder="Nombre de la mascota.">
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label for="nombreMascota." class="col-sm-2 control-label">Raza:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" placeholder="Raza">
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="tipo">Tipo:</label>
+                                <div class="col-sm-10">
+                                    <label>
+                                        <input id="tipo" name="tipoPerro" value="Perro" checked="" type="radio"> Perro
+                                    </label>
+                                    <label>
+                                        <input id="tipo" name="tipoGato" value="Gato" type="radio"> Gato
+                                    </label>
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="esterilizado">Esterilizado:</label>
+                                <div class="col-sm-10">
+                                    <label>
+                                        <input id="esterilizado" name="EsterilizadoTrue" value="True" checked="" type="radio"> Sí
+                                    </label>
+                                    <label>
+                                        <input id="esterilizado" name="EsterilizadoFalse" value="False" type="radio"> No
+                                    </label>
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="vacunado">Vacunado:</label>
+                                <div class="col-sm-10">
+                                    <label>
+                                        <input id="vacunado" name="vacunadoTrue" value="True" checked="" type="radio"> Sí
+                                    </label>
+                                    <label>
+                                        <input id="vacunado" name="vacunadoTure" value="False" type="radio"> No
+                                    </label>
+                                </div>
+                            
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="sexo">Sexo:</label>
+                                <div class="col-sm-10">
+                                    <label>
+                                        <input id="sexoMacho" name="sexo" value="Macho" checked="" type="radio"> Macho
+                                    </label>
+                                    <label>
+                                        <input id="sexoHembra" name="sexo" value="Hembra" type="radio"> Hembra
+                                    </label>
+                                </div>
+                            </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="edad">Edad:</label>
+                                <div class="col-sm-10">
+                                    <label>
+                                        <input id="cachorro" name="edad" value="Cachorro" checked="" type="radio"> Cachorro
+                                    </label>
+                                    <label>
+                                        <input id="joven" name="edad" value="Joven" type="radio"> Joven
+                                    </label>
+                                </div>
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <label>
+                                        <input id="adulto" name="edad" value="Adulto" type="radio"> Adulto
+                                    </label>
+                                    <label>
+                                        <input id="anciano" name="edad" value="Anciano" type="radio"> Anciano
+                                    </label>
+                                </div>
+                        </div>
+                            
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Historia:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="historia" name="historia" placeholder="Historia de la mascota.">
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Necesidades especiales:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="necesidadesEspeciales" name="necesidadesEspeciales" placeholder="Necesidades especiales que requiera la mascota.">
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Organización: </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="organizacion" name="organizacion" disabled>
+                                </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Fotografía: </label>
+                                <div class="col-sm-10">
+                                    <input type="file" id="fotografia" name="fotografia" multiple>
+                                </div>
+                            
+                        </div>
+                        
+                        <div class="col-sm-offset-3 cols-sm-4">
+                            <input type="submit" class="col-xs-4 btn btn-primary" id="submit" value="Agregar">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <p>Organization image (User image)</p>
+                </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+{% endblock %}

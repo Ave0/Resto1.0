@@ -1,0 +1,173 @@
+{% extends 'BackUsuarios/Base.html' %}
+{% load staticfiles %}
+
+	{% block css_adicional %}
+	<!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'Back/plugins/datatables/jquery.dataTables.min.css' %}">
+      <link rel="stylesheet" href="{% static 'Back/fullcalendar/fullcalendar.min.css'%}">
+  	<link rel="stylesheet" href="{% static 'Back/fullcalendar/fullcalendar.print.css'%}" media="print">
+	{% endblock %}
+
+
+
+
+{% block contenido_principal%}
+<section class="invoice">
+ 
+<div class="tab-pane" id="settings">
+
+			<div class="row">
+              
+                    
+                  </div>
+
+                  </div>
+                  </section>
+{% endblock %}
+
+{% block js_adicional %}
+    <script src="{% static 'Back/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'Back/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'Back/fullcalendar/moment.min.js' %}"></script>
+	<script src="{% static 'Back/fullcalendar/fullcalendar.min.js' %}"></script>
+	<script>
+	var ElememtosIniciales=3;
+      $(function () {
+    	  var table=$('#TablaUsuarios').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "pageLength": 5,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "columnDefs": [
+                         {
+                             "targets": [ 2 ],
+                             "visible": false,
+                             "searchable": false
+                         }],
+          "language": {
+        	    "emptyTable":     "Sin datos disponibles",
+        	    "info":           "Mostrando _END_ datos  de un total de _TOTAL_",
+        	    "infoEmpty":      "No hay entradas",
+        	    "infoFiltered":   "(filtrado de un total de _MAX_ )",
+        	    "infoPostFix":    "",
+        	    "thousands":      ",",
+        	    "lengthMenu":     "Show _MENU_ entries",
+        	    "loadingRecords": "Cargando...",
+        	    "processing":     "Procesando...",
+        	    "search":         "Buscar:",
+        	    "zeroRecords":    "No hay coincidencias",
+        	    "paginate": {
+        	        "first":      "Primero",
+        	        "last":       "Ultimo",
+        	        "next":       "Siguiente",
+        	        "previous":   "Anterior	"
+        	    },
+        	    "aria": {
+        	        "sortAscending":  ": Ordenado Ascendente",
+        	        "sortDescending": ": Ordenado Descendente"
+        	    }
+
+                         }
+          
+          
+        });
+        
+        $('#TablaUsuarios tbody').on( 'click', 'tr', function () {
+       
+			var valores= table.row( this ).data();
+      	    if ( $(this).hasClass('selected') ) {
+                  $(this).removeClass('selected');
+              }
+              else {
+                  table.$('tr.selected').removeClass('selected');
+                  $(this).addClass('selected');
+              }
+      	$('#nombreCompleto').val(valores[0]);
+  	    $('#correoElectronico').val(valores[1]);
+  	    $("#imagenUsuario").attr("src",valores[2]);
+  	    if (valores[4]=='False'){
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', false);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', true);  
+  	    }
+  	    else{
+  	    	var $radios = $('input:radio[name=radioEstatus]');
+  	  	  	$radios.filter('[value=Activo]').prop('checked', true);
+	  	  	$radios.filter('[value=Inactivo]').prop('checked', false);  
+  	    	
+  	    }
+  	  	 
+  	    
+  	  var offset = 20; //Offset of 20px
+
+      $('html, body').animate({
+          scrollTop: $("#divisionDatos").offset().top + offset
+      }, 200);
+  	    
+  	  	
+      	} );
+        
+        
+                 
+
+        
+        
+      });
+      $(function () {
+
+    	    CKEDITOR.replace('encabezado');
+    	    CKEDITOR.replace('pieDePagina');
+    	   
+    	  });
+     
+      function add_fields() {
+    	  	var wrapper = document.getElementById("wrapper");
+    	  	wrapper.insertAdjacentHTML("beforeend",'<div class="form-group"><label for="Concepto" class="col-sm-2 control-label">Partida</label> \
+    				<div class="col-sm-6"> \
+    				<input type="text" class="form-control" id="Partida'+ElememtosIniciales+'"  \
+    				name="Partida'+ElememtosIniciales+'"  placeholder="Concepto"> \
+    				</div> \
+    				<div class="col-sm-1"> \
+    					<input type="text" class="form-control" id="Cantidad'+ElememtosIniciales+'" name="Cantidad'+ElememtosIniciales+'" \
+    					placeholder="Cantidad" onblur="calcular_totales()";>  \
+    				</div> \
+    				<div class="col-sm-1"> \
+    					<input type="text" class="form-control" id="PU'+ElememtosIniciales+'"  name="PU'+ElememtosIniciales+'"\
+    					placeholder="Precio Unitario" onblur="calcular_totales()";>  \
+    				</div> \
+    				<div class="col-sm-2"> \
+					<input type="text" class="form-control" id="PT'+ElememtosIniciales+'"  name="PT'+ElememtosIniciales+'"\
+					placeholder="Precio Total" disabled>  \
+				</div> \
+				</div>'
+    	  			
+    	  	);
+    	    
+			document.getElementById('numeroPartidas').value =ElememtosIniciales ;
+    	    ElememtosIniciales=ElememtosIniciales+1;
+    	}
+      
+      function calcular_totales(){
+    	  for (i = 1; i < ElememtosIniciales+1; i++) {
+    		  var cantidadS="Cantidad"+i.toString();
+    		  var precioUnitarioS="PU"+i.toString();
+    		  var precioTotalS="PT"+i.toString();
+    		  var cantidad = document.getElementById(cantidadS).value;
+    		  var precioUnitario = parseFloat(document.getElementById(precioUnitarioS).value);
+    		  if (!isNaN(cantidad) && !isNaN(precioUnitario)  ){
+    			  var total=precioUnitario*cantidad;
+        		  document.getElementById(precioTotalS).value = total;
+    		  }
+    		  
+    		}
+      };
+    </script>
+    
+ 
+{% endblock %}
+
+
+ 
