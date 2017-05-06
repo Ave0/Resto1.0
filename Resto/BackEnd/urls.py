@@ -20,4 +20,5 @@ from BackEnd import views
 
 urlpatterns = [
     url(r'^ejemplo$', views.VistaEjemplo ),
+    url(r'^$', views.VistaLogin),
 ]
