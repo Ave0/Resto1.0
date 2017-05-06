@@ -8,3 +8,6 @@ def VistaEjemplo(request):
 def VistaLogin(request):
 	contexto = []
 	return render(request, 'BackEnd/Login.html', contexto)
+
+def BusquedaRestaurantes(request):
+    return render("BusquedaRestaurantes.html")

@@ -21,4 +21,5 @@ from BackEnd import views
 urlpatterns = [
     url(r'^ejemplo$', views.VistaEjemplo ),
     url(r'^$', views.VistaLogin),
+    url(r'^buscar_restaurantes$', views.BusquedaRestaurantes, name="BusquedaRestaurantes"),
 ]
