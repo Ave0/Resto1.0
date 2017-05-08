@@ -20,4 +20,7 @@ from BackEnd import views
 
 urlpatterns = [
     url(r'^ejemplo$', views.VistaEjemplo ),
+    url(r'^login$', views.VistaLogin),
+    url(r'^login/autentificar$', views.login_autentificar, name="autentificar"),
+    url(r'^buscar_restaurantes$', views.BusquedaRestaurantes, name="BusquedaRestaurantes"),
 ]
