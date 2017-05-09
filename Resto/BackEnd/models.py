@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Restaurante(models.Model):
+    nombre = models.CharField(max_length=50, default="")
     direccion = models.CharField(max_length=60)
     latitud = models.FloatField(null=True)
-    longitud = models.FloatField(nul=True)
+    longitud = models.FloatField(null=True)
     numero_mesas = models.IntegerField()
     tipo_comida = models.CharField(max_length=20)
     rango_precios = models.CharField(max_length=15)
@@ -19,7 +20,7 @@ class PreRegistro(models.Model):
     password = models.CharField(max_length=30)
     direccion = models.CharField(max_length=60)
     latitud = models.FloatField(null=True)
-    longitud = models.FloatField(nul=True)
+    longitud = models.FloatField(null=True)
     numero_mesas = models.IntegerField()
     tipo_comida = models.CharField(max_length=20)
     rango_precios = models.CharField(max_length=15)

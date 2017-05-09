@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate
+from models import *
+from django.db.models import Q, Count
 
 # Create your views here.
 def VistaEjemplo(request):
@@ -13,8 +15,25 @@ def VistaLogin(request):
 	return render(request, 'BackEnd/Login.html', contexto)
 
 def BusquedaRestaurantes(request):
-    contexto = []
-    return render(request, "BackEnd/busquedarestaurantes.html", contexto)
+    context = {}
+    listado_restaurantes = Restaurante.objects.all()
+
+
+    resultado_busqueda = ""
+    if request.GET:
+        texto = request.GET.get('texto')
+        if texto:
+            try:
+                resultado_busqueda = Restaurante.objects.filter(
+                    Q(nombre__contains=texto) | Q(direccion__contains=texto) | Q(tipo_comida__contains=texto))
+                listado_restaurantes = resultado_busqueda
+            except Restaurante.DoesNotExist:
+                listado_restaurantes = None
+
+    context = {
+        'listado_restaurantes': listado_restaurantes,
+    }
+    return render(request, "BackEnd/busquedarestaurantes.html", context)
 
 
 def login_autentificar(request):
