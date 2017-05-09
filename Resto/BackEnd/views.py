@@ -61,3 +61,6 @@ def mostarRestaurantes(request):
     diccionario["latitudes"] = latitudes
     diccionario["longitudes"] = longitudes
     return JsonResponse(diccionario)
+
+def registrar_restaurante(request):
+    return HttpResponse("REgistro")
