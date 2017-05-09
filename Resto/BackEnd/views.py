@@ -13,7 +13,9 @@ def VistaLogin(request):
 	return render(request, 'BackEnd/Login.html', contexto)
 
 def BusquedaRestaurantes(request):
-    return render("BusquedaRestaurantes.html")
+    contexto = []
+    return render(request, "BackEnd/busquedarestaurantes.html", contexto)
+
 
 def login_autentificar(request):
     email = request.POST.get("email")
@@ -22,3 +24,21 @@ def login_autentificar(request):
     if autentificar is not None:
         return HttpResponse("Si_Existe")
     return HttpResponse("No_Existe")
+
+
+def mostarRestaurantes(request):
+    latitudes=[]
+    longitudes=[]
+    diccionario={}
+    restaurantes = models.Restaurante.objects.all().values("latitud" , "longitud")
+
+    for data_latitud in restaurantes:
+        latitudes.append(data_latitud.latitud)
+        latitudes.append('1.023')
+    for data_longitud in restaurantes:
+        longitudes.append(data_longitud.longitud)
+        longitudes.append('2.54')
+
+    diccionario["latitudes"] = latitudes
+    diccionario["longitudes"] = longitudes
+    return JsonResponse(diccionario)
