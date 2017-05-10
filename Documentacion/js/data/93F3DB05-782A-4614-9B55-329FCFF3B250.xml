@@ -1,0 +1,12 @@
+tocTab[tocTab.length] = new Array("0:1", "", "Casos de Uso", "EARoot/EA1.htm", "180.png", "1", "0", "", "Use Case diagram0","{9FF55AC7-0B6C-4097-94E7-BC29BC73FA96}");
+tocTab[tocTab.length] = new Array("0:2", "", "Administrador", "EARoot/EA3.htm", "6.png", "7", "0", "", "Actor0","{F28E2779-67ED-46a6-992C-2B58424C5288}");
+tocTab[tocTab.length] = new Array("0:3", "", "Autenticación de usuarios", "EARoot/EA4.htm", "7.png", "5", "0", "", "UseCase0","{D3573832-B918-418d-8A69-3F271D801C8D}");
+tocTab[tocTab.length] = new Array("0:4", "", "Cliente", "EARoot/EA5.htm", "6.png", "2", "0", "", "Actor0","{A2C3FAA7-DA69-493b-BD6C-8097A3217C78}");
+tocTab[tocTab.length] = new Array("0:5", "", "Eliminar y editar cuentas", "EARoot/EA6.htm", "7.png", "11", "0", "", "UseCase0","{8B4A01A8-6824-41d3-9341-BEDF4A5747E6}");
+tocTab[tocTab.length] = new Array("0:6", "", "Generación de cuentas", "EARoot/EA7.htm", "7.png", "10", "0", "", "UseCase0","{DD8B9288-F11D-4f34-9775-5B5BB7F66E40}");
+tocTab[tocTab.length] = new Array("0:7", "", "Realizar busqueda de restaurantes", "EARoot/EA8.htm", "7.png", "14", "0", "", "UseCase0","{EFD75281-DFF9-460c-83EC-8CD0BA2CF087}");
+tocTab[tocTab.length] = new Array("0:8", "", "Realizar reservaciones", "EARoot/EA9.htm", "7.png", "13", "0", "", "UseCase0","{18A04BBA-A0ED-4db1-92ED-A3E627854895}");
+tocTab[tocTab.length] = new Array("0:9", "", "Registro de usuarios", "EARoot/EA10.htm", "7.png", "6", "0", "", "UseCase0","{3942774E-D35A-45b1-973A-F034DED89050}");
+tocTab[tocTab.length] = new Array("0:10", "", "Restaurante", "EARoot/EA11.htm", "6.png", "9", "0", "", "Actor0","{D57D5937-C02F-42c4-8301-73F9A65F0944}");
+tocTab[tocTab.length] = new Array("0:11", "", "Validar registro de usuario", "EARoot/EA12.htm", "7.png", "8", "0", "", "UseCase0","{A6DFE197-B04C-42d6-B71F-33988C0DF3AC}");
+tocTab[tocTab.length] = new Array("0:12", "", "Visualizador de cuentas", "EARoot/EA13.htm", "7.png", "12", "0", "", "UseCase0","{3454B224-F0A4-4bdd-A12F-A734CA311FBA}");

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends "BackEnd/Base.html" %}
+{% load staticfiles %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {% block contenido_principal %}
+    <script>
+    $(document).ready(function() {
+        //alert("Hola Mundo");
+    });
+
+</script>
+       <div class="row col-md-12">
+           <div class="pull-left col-md-offset-2 col-md-4  ">
+               <form class="" id="" action="" method="get">
+                  <div class="form-group ">
+                    <div class="">
+                        <div class=" ">
+                            <input class="form-control " type="text" name="texto" id="texto" placeholder="Buscar restaurante por su nombre, dirección o tipo de comida que buscas"/>
+                        </div>
+                    </div>
+                  </div>
+                  <input type="submit" class="btn btn-default pull-left" value="Buscar">
+                </form>
+           </div>
+           <div class="clearfix"></div>
+
+
+           <div class="container col-md-offset-2 col-md-4 ">
+               <h3>Listado de Restaurantes </h3>
+               {% for restaurante in listado_restaurantes %}
+                    {{ restaurante.nombre }}<br>
+                    {{ restaurante.direccion }}<br>
+                    {{ restaurante.tipo_comida }}<br>
+                    <div class="btn btn-primary"> Ver detalle del Restaurante</div>
+               {% endfor %}
+
+               {{variable}}
+           </div>
+       </div>
+
+
+    {% endblock %}
+
+</body>
+</html>
