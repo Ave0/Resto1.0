@@ -38,7 +38,9 @@ $(function(){
             contentType: false,
             data:formData,
             success: function(data){
-              console.log(data);
+              if(data == "REgistro"){
+                alert("Un Admin te Autorizara");
+              }
             }
           });
         }else{

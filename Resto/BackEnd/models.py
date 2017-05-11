@@ -27,4 +27,3 @@ class PreRegistro(models.Model):
     tiempo_espera = models.TimeField()
     tiempo_promedio_mesa = models.TimeField()
     aceptado = models.BooleanField(default=False)
-    usuario_aprobacion = models.ForeignKey(User)

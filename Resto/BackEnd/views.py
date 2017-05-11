@@ -63,4 +63,19 @@ def mostarRestaurantes(request):
     return JsonResponse(diccionario)
 
 def registrar_restaurante(request):
+    nombre = request.POST.get("nombre")
+    email = request.POST.get("email")
+    password = request.POST.get("password")
+    direccion = request.POST.get("direccion")
+    latitud = request.POST.get("latitud")
+    longitud = request.POST.get("longitud")
+    numero_mesas = request.POST.get("numero_mesas")
+    tipo_comida = request.POST.get("tipo_comida")
+    rango_precios = request.POST.get("rango_precios")
+    tiempo_espera = request.POST.get("tiempo_espera")
+    tiempo_promedio_mesa = request.POST.get("tiempo_mesa")
+    registro = PreRegistro(nombre=nombre, email=email, password=password, direccion=direccion,
+        latitud=latitud, longitud=longitud, numero_mesas=numero_mesas, tipo_comida=tipo_comida,
+        rango_precios=rango_precios, tiempo_espera=tiempo_espera, tiempo_promedio_mesa=tiempo_promedio_mesa)
+    registro.save()
     return HttpResponse("REgistro")
