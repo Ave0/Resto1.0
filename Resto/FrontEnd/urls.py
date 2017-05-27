@@ -20,5 +20,6 @@ from FrontEnd import views
 
 urlpatterns = [
     url(r'^detalles$', views.detalles, name="detalles_view"),
+    url(r'^HomeLanding$', views.HomeLanding, name="HomeLanding_view"),
 
 ]

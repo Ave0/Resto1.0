@@ -1019,19 +1019,24 @@ ul {
     width: 100%;
     z-index: 5;
 }
+
+
 .search-section .search-options > li {
 	float: left;
 	list-style: outside none none;
 	margin: 0;
-	width: 296px;
+	width: 516px;
 }
+
 .search-section .search-options > li input {
 	height: 55px;
 	margin: 0;
 	width: 100%;
 	color: #444;
-	padding-left: 10px;
+	pa
+	dding-left: 10px;
 }
+
 .search-section .search-options > li .btn {
 	border-radius: 0 2px 2px 0;
 	height: 55px;

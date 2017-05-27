@@ -7,11 +7,11 @@ from django.db.models import Q, Count
 
 # Create your views here.
 def VistaEjemplo(request):
-    contexto=[]
-    return render(request, 'BackEnd/Base.html',contexto)
+    contexto={}
+    return render(request, 'BackEnd/busquedarestaurantes.html',contexto)
 
 def VistaLogin(request):
-	contexto = []
+	contexto = {}
 	return render(request, 'BackEnd/Login.html', contexto)
 
 def BusquedaRestaurantes(request):
