@@ -658,7 +658,7 @@ ul {
 }
 /* =-=-=-=-=-=-= Header Top Bar  =-=-=-=-=-=-= */
 .header-top {
-	background-color: #2d343d;
+	background-color: #f68936;
 }
 .header-right {
 	padding: 0;
@@ -670,7 +670,7 @@ ul {
 	border-left: medium none;
 }
 .header-top ul li {
-	border-left: 1px solid #555;
+	border-left: 1px solid #f68936;
 	display:inline-block;
 	line-height: 35px;
 	padding: 0 10px;
